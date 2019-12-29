@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/post_list.css' %}">
+    <title>
+        {% block title %}
+            Block engine
+        {% endblock %}
+    </title>
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #130f33;">
+      <a class="navbar-brand text-light" href="{% url 'home_page' %}">Чіп і Дейл</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link text-light" href="{% url 'posts_list_url' %}">Список вакансій</a>
+          </li>
+            {% if request.user.is_authenticated %}
+           <li class="nav-item active">
+            <a class="nav-link text-light" href="{% url 'post_create_url' %}">Створити вакансію</a>
+          </li>
+            {% endif %}
+        </ul>
+
+            {% if request.user.is_authenticated %}
+            <ul class="nav nab-bar-nav navbar-right">
+                <li class="nav-item active">
+                    <a class="nav-link text-light" href="#" tabindex="-1" aria-disabled="true">{{ user }}</a>
+                </li>
+                <li>
+                    <a class="nav-link text-light" href="{% url 'user_detail' %}">Особистий кабінет</a>
+                </li>
+                <li>
+                    <a class="nav-link text-light" href="{% url 'logout_url' %}">Вийти</a>
+                </li>
+            </ul>
+            {% else %}
+           <ul class="nav nab-bar-nav navbar-right">
+                <li class="nav-item active">
+                    <a class="nav-link text-light" href="{% url 'login_url' %}">Ввійти</a>
+                </li>
+           </ul>
+          {% endif %}
+          <form class="form-inline my-2 my-lg-0" action="{% url 'posts_list_url' %}">
+          <input class="form-control mr-sm-2" type="search" placeholder="Пошук" name="search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Пошук</button>
+        </form>
+      </div>
+    </nav>
+    <div class="container ml-5 mr-1 ">
+        <div class="row">
+            <div class="col-10 offset-md-2">
+                {% block content %}
+                There is no any content
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% if request.user.is_authenticated and request.user is staff %}
+{% endif %}
+</body>
+</html>

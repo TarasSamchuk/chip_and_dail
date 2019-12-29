@@ -1,0 +1,33 @@
+{% extends 'chipdail/base_block.html' %}
+
+{% block title %}
+list dialogs
+{% endblock %}
+
+{% block content %}
+<div class="panel">
+{% if not chat %}
+    <div class="panel panel-body">
+        {% trans "Невозможно начать беседу. Не найден пользователь или вы не имеете доступа к данной беседе." %}
+    </div>
+{% else %}
+    {% load tz %}
+    {% if chat %}
+        <div id="messages" class="panel">
+            <div id="innerMessages">
+                {% for message in chat.message_set.all %}
+                        {% include 'users/message.html' with message_item=message %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <div id="message_form">
+        <form id="message-form" class="panel panel-body" method="post" >
+            {% load bootstrap3 %}
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="btn btn-default btn-sm" onclick="return ETextEditor.validateForm('message-form')"><span class="ico ico-comment"></span>{% trans "Отправить" %}</button>
+        </form>
+    </div>
+{% endif %}
+{% endblock %}

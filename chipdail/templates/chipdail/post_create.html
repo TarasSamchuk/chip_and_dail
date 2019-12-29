@@ -1,0 +1,29 @@
+{% extends 'chipdail/base_block.html' %}
+
+{% block title %}
+    Post Create - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <form action="{% url 'post_create_url' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                {% if field.errors %}
+                    <div class="alert alert-danger">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+                <h3 align="center">{{ field.label }}</h3>
+                <div class="bg-primary border border-dark">{{ field }}</div>
+            </div>
+        {% endfor %}
+        <div align="center">
+        <button type="submit" class="btn btn-primary">Створити вакансію</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+

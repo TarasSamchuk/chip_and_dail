@@ -1,0 +1,29 @@
+{% extends 'chipdail/base_block.html' %}
+{% block title %}
+{{ post.work }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="card text-center mt-5">
+      <div class="card-header bg-primary">
+        {{ post.work }}
+      </div>
+        <div class="card-body">
+            <p class="card-text">
+                <h5 class="card-title">Опис: {{ post.body }}</h5>
+                <p class="card-text">Місце роботи: {{ post.place }}</p>
+                <p class="card-text">Початок роботи: {{ post.start_work }}</p>
+            </p>
+        </div>
+        <div class="card-footer text-muted">
+            {{ post.date_pub }}
+        </div>
+         <div class="card-footer text-muted">
+             {% if request.user.id != post.user.id %}
+             <a href="<!--{% url 'create_dialog' user_id=post.user.id %}-->" class="btn btn-primary">Написати</a>
+             {% endif %}
+             {{ post.user }}
+         </div>
+    </div>
+{% endblock %}
+<!---->

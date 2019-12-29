@@ -1,0 +1,22 @@
+{% extends 'chipdail/base_block.html' %}
+{% block title %}
+{{ user.user }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+     <div class="card mb-4 bg-primary">
+        <div class="card-header bg-primary" align="center">
+             {{ user.user }}
+        </div>
+        <div class="card-body" align="center">
+            <p class="card-text">{{ user.surname }}</p>
+            <p class="card-text">{{ user.name }}</p>
+            <p class="card-text">{{ user.email}}</p>
+            <p class="card-text">{{ user.phone}}</p>
+            <p class="card-text">{{ user.birthday}}</p>
+            <a href="#" class="btn btn-light">Написати</a>
+        </div>
+    </div>
+{% endblock %}
+
+

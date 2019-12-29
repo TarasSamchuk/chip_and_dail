@@ -1,0 +1,33 @@
+{% extends 'chipdail/base_block.html' %}
+{% block title %}
+Список вакансій
+{% endblock %}
+{% block content %}
+<div class="posts mt-5">
+    <h1 align="center"  class="mb-2 bg-primary">Список вакансії:</h1>
+    {% for post in posts %}
+        <div class="card mb-5 text-center">
+              <div class="card-header bg-primary">
+                {{ post.work }}
+              </div>
+              <div class="card-body bg-light">
+                    <h5 class="card-title">Опис: {{ post.body }}</h5>
+                    <p class="card-text">Місце роботи: {{ post.place }}</p>
+                    <a  href="{% url 'post_detail_url' slug=post.slug %}" class="btn btn-primary">Детальніше</a>
+              </div>
+              <div class="card-footer text-muted bg-light">
+                Дата публікації: {{ post.date_pub }}
+              </div>
+                <div class="card-footer bg-primary">
+                    Автор:
+                    <a  class="text-dark" href="{{ user.get_absolute_url }}">{{ post.user }}</a>
+                </div>
+            {% if request.user.id == post.user.id %}
+            <div class="card-footer text-muted">
+                <a href="{% url 'del_post_url' slug=post.slug %}">Видалити</a>
+            </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
